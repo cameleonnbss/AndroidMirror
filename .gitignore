@@ -16,3 +16,6 @@ vendor/
 audit/
 audit-output/
 remediation/
+
+# packaging copy (duplicated from ./LICENSES at package time)
+resources/LICENSES/
