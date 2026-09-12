@@ -1,0 +1,56 @@
+appId: com.androidmirror.app
+productName: AndroidMirror
+copyright: Powered by scrcpy (Apache-2.0) & Android platform tools (Apache-2.0)
+
+directories:
+  buildResources: build
+  output: dist
+
+# Only the compiled bundles are packaged; runtime deps are bundled by electron-vite.
+files:
+  - out/**
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+
+# scrcpy/adb binaries, server and DLLs (Apache-2.0 — see LICENSES/ at the repo
+# root; licenses are also shipped inside the app under resources/LICENSES).
+extraResources:
+  - from: resources/scrcpy
+    to: scrcpy
+    filter: ['**/*']
+  - from: resources/LICENSES
+    to: LICENSES
+    filter: ['**/*']
+  - from: assets/icon/icon.png
+    to: icon/icon.png
+
+asar: true
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  # Drop-in replacement: put a new icon.png (>=256x256) or icon.ico in
+  # assets/icon/ and rebuild — no code changes needed. electron-builder
+  # converts a PNG to ICO automatically for the installer and the exe.
+  icon: assets/icon/icon.png
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: AndroidMirror
+  artifactName: ${productName}-Setup-${version}.${ext}
+  deleteAppDataOnUninstall: false
+
+portable:
+  artifactName: ${productName}-Portable-${version}.${ext}
+
+# electron-builder verifies code signatures when certificates are configured;
+# leave unsigned by default for local builds.

@@ -1,0 +1,18 @@
+# build & deps
+node_modules/
+dist/
+out/
+vendor/
+
+# scrcpy reference material (runtime is committed; the source ZIP is not)
+vendor/
+
+# logs & temp
+*.log
+.DS_Store
+
+# unrelated local leftovers
+.freebuff/
+audit/
+audit-output/
+remediation/
